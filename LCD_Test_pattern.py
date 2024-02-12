@@ -7,30 +7,30 @@ lcd.init()
 columns = 16
 lines = 0
 
-row1 = "    pattern     "
-row2 = range(0, 16)
+Message_Line1 = "    pattern     "
+Message_Line2 = range(0, 16)
 
 while 1:
     #generate data
     if lines == 0:
-        row1 = "    pattern     "
-        row2 = range(0, 16)
+        Message_Line1 = "    pattern     "
+        Message_Line2 = range(0, 16)
     else:
-        temp = row1
-        row1 = row2
+        temp = Message_Line1
+        Message_Line1 = Message_Line2
         if 255<(lines*columns + 16):
-            row2 = range(lines*columns, 256)
+            Message_Line2 = range(lines*columns, 256)
             lines = -1
         else:
-            row2 = range(lines*columns, lines*columns + 16)
+            Message_Line2 = range(lines*columns, lines*columns + 16)
         del temp
     #output
     lcd.set_DDRAM_addr(DDRAM_1_LINE_START)
-    for data in row1:
+    for data in Message_Line1:
         lcd.write_data(data)
 
     lcd.set_DDRAM_addr(DDRAM_2_LINE_START)
-    for data in row2:
+    for data in Message_Line2:
         lcd.write_data(data)
 
     lines+=1

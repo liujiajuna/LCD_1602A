@@ -1,46 +1,46 @@
 import machine
 import utime
 
-ENABLE_DELAY    = 0.005
+ENABLE_DELAY                = 0.005
 
-CLEAR           = 0b00000001
-HOME            = 0b00000010
+CLEAR                       = 0b00000001
+HOME                        = 0b00000010
 
-ENTER           = 0b00000100
-ENTER_INC       = 0b00000010
-ENTER_DEC       = 0b00000000
-ENTER_SHIFT     = 0b00000001
-ENTER_NOT_SHIFT = 0b00000000
+ENTER                       = 0b00000100
+ENTER_INC                   = 0b00000010
+ENTER_DEC                   = 0b00000000
+ENTER_SHIFT                 = 0b00000001
+ENTER_NOT_SHIFT             = 0b00000000
 
-DISPLAY         = 0b00001000
-DIS_ON          = 0b00000100
-DIS_OFF         = 0b00000000
-DIS_CUR_ON      = 0b00000010
-DIS_CUR_OFF     = 0b00000000
-DIS_CUR_BLINK       = 0b00000001
-DIS_CUR_NOT_BLINK   = 0b00000000
+DISPLAY                     = 0b00001000
+DISPLAY_ON                  = 0b00000100
+DISPLAY_OFF                 = 0b00000000
+DISPLAY_CURSOR_ON           = 0b00000010
+DISPLAY_CURSOR_OFF          = 0b00000000
+DISPLAY_CURSOR_BLINK        = 0b00000001
+DISPLAY_CURSOR_NOT_BLINK    = 0b00000000
 
-SHIFT           = 0b00010000
-SHIFT_DIS       = 0b00001000
-SHIFT_CUR       = 0b00000000
-SHIFT_RIGHT     = 0b00000100
-SHIFT_LEFT      = 0b00000000
+SHIFT                       = 0b00010000
+SHIFT_DISPLAY               = 0b00001000
+SHIFT_CURSOR                = 0b00000000
+SHIFT_RIGHT                 = 0b00000100
+SHIFT_LEFT                  = 0b00000000
 
-FUNCTION        = 0b00100000
-FUNC_8_BIT      = 0b00010000
-FUNC_4_BIT      = 0b00000000
-FUNC_2_LINE     = 0b00001000
-FUNC_1_LINE     = 0b00000000
-FUNC_5_10       = 0b00000100
-FUNC_5_8        = 0b00000000
+FUNCTION                    = 0b00100000
+FUNC_8_BIT                  = 0b00010000
+FUNC_4_BIT                  = 0b00000000
+FUNC_2_LINE                 = 0b00001000
+FUNC_1_LINE                 = 0b00000000
+FUNC_5X10                   = 0b00000100
+FUNC_5X8                    = 0b00000000
 
-CGRAM           = 0b01000000
-DDRAM           = 0b10000000
+CGRAM                       = 0b01000000
+DDRAM                       = 0b10000000
 
-DDRAM_1_LINE_START  = 0x00
-DDRAM_1_LINE_END    = 0x27
-DDRAM_2_LINE_START  = 0x40
-DDRAM_2_LINE_END    = 0x67
+DDRAM_1_LINE_START          = 0x00
+DDRAM_1_LINE_END            = 0x27
+DDRAM_2_LINE_START          = 0x40
+DDRAM_2_LINE_END            = 0x67
 
 class LCD_1602A:
     """
@@ -96,8 +96,8 @@ class LCD_1602A:
     def init(self):
         """Initialize the LCD with default settings."""
         self.clear()
-        self.function(FUNC_8_BIT|FUNC_2_LINE|FUNC_5_8)
-        self.display(DIS_ON|DIS_CUR_ON|DIS_CUR_BLINK)
+        self.function(FUNC_8_BIT|FUNC_2_LINE|FUNC_5X8)
+        self.display(DISPLAY_ON|DISPLAY_CURSOR_ON|DISPLAY_CURSOR_BLINK)
         self.entermode(ENTER_INC|ENTER_NOT_SHIFT)
 
     def clear(self):
@@ -120,7 +120,7 @@ class LCD_1602A:
         """
         Set display of LCD,cursor,cursor blinking
 
-        :param command: DIS_ON/DIS_OFF | DIS_CUR_ON/DIS_CUR_OFF | DIS_CUR_BLINK/DIS_CUR_NOT_BLINK
+        :param command: DISPLAY_ON/DISPLAY_OFF | DISPLAY_CURSOR_ON/DISPLAY_CURSOR_OFF | DISPLAY_CURSOR_BLINK/DISPLAY_CURSOR_NOT_BLINK
         """
         self._send_command(DISPLAY | command)
 
@@ -128,7 +128,7 @@ class LCD_1602A:
         """
         Shift display or cursor
 
-        :param command: SHIFT_DIS/SHIFT_CUR | SHIFT_RIGHT/SHIFT_LEFT
+        :param command: SHIFT_DISPLAY/SHIFT_CURSOR | SHIFT_RIGHT/SHIFT_LEFT
         """
         self._send_command(SHIFT | command)
 
@@ -136,7 +136,7 @@ class LCD_1602A:
         """
         Set interface data length,number of display lines,character font
 
-        :param command: FUNC_8_BIT/FUNC_4_BIT | FUNC_2_LINE/FUNC_1_LINE | FUNC_5_10/FUNC_5_8
+        :param command: FUNC_8_BIT/FUNC_4_BIT | FUNC_2_LINE/FUNC_1_LINE | FUNC_5X10/FUNC_5X8
         """
         self._send_command(FUNCTION | command)
 
