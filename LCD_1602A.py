@@ -175,7 +175,8 @@ class LCD_1602A:
         if isinstance(data,int):
             self._send_data(data)
         elif isinstance(data,str):
-            self._send_data(ord(data))
+            for char in data:
+                self._send_data(ord(char))
         else:
             pass
 
